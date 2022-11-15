@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,12 +10,13 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
+  final myController = TextEditingController();
   void _callAPI() async {
     var url = Uri.parse(
-      'https://apis.data.go.kr/1471000/FoodNtrIrdntInfoService1/getFoodNtrItdntList1?serviceKey=nfGyrhix1PGJ1x6F%2BZ2%2Frqm0BLUzXIXxcN1sCy2dmW0SfkEgRbq3y1yqJYChKcvhuC6Yi9yDLlZuXzrbc8OkqA%3D%3D&desc_kor=%EB%B0%94%EB%82%98%EB%82%98&pageNo=1&numOfRows=20&type=xml',
-    );
+        'https://apis.data.go.kr/1471000/FoodNtrIrdntInfoService1/getFoodNtrItdntList1?serviceKey=nfGyrhix1PGJ1x6F%2BZ2%2Frqm0BLUzXIXxcN1sCy2dmW0SfkEgRbq3y1yqJYChKcvhuC6Yi9yDLlZuXzrbc8OkqA%3D%3D&desc_kor=${myController.text}&pageNo=1&numOfRows=20&type=json');
     var res = await http.get(url);
-    print('response: ${res.body}');
+    var json = jsonDecode(res.body)['body']['items'][0];
+    print(json);
   }
 
   @override
@@ -43,20 +45,29 @@ class _SearchState extends State<Search> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(16),
-                        child: Column(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            TextField(
-                              decoration: InputDecoration(
-                                  prefix: const Icon(Icons.search),
-                                  hintText: '음식입력',
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                      borderSide: const BorderSide(
-                                          color: Colors.lightBlueAccent))),
+                            SizedBox(
+                              width: 300,
+                              child: TextField(
+                                controller: myController,
+                                decoration: InputDecoration(
+                                    prefix: const Icon(Icons.search),
+                                    hintText: '음식입력',
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: 8),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        borderSide: const BorderSide(
+                                            color: Colors.lightBlueAccent))),
+                                maxLines: 3,
+                                minLines: 1,
+                              ),
                             ),
                             ElevatedButton(
                               onPressed: _callAPI,
-                              child: const Text("Call API"),
+                              child: const Text("검색"),
                             ),
                           ],
                         ),

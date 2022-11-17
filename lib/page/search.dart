@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:weight_app_project3/apiModel/food_model.dart';
+import 'package:weight_app_project3/apiModel/food_providers.dart';
 
 class Search extends StatefulWidget {
   const Search({super.key});
@@ -10,13 +12,13 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
+  List<FoodModel> foods = [];
+  bool isLoading = true;
+  FoodProvider foodprovider = FoodProvider();
   final myController = TextEditingController();
-  void _callAPI() async {
-    var url = Uri.parse(
-        'https://apis.data.go.kr/1471000/FoodNtrIrdntInfoService1/getFoodNtrItdntList1?serviceKey=nfGyrhix1PGJ1x6F%2BZ2%2Frqm0BLUzXIXxcN1sCy2dmW0SfkEgRbq3y1yqJYChKcvhuC6Yi9yDLlZuXzrbc8OkqA%3D%3D&desc_kor=${myController.text}&pageNo=1&numOfRows=20&type=json');
-    var res = await http.get(url);
-    var json = jsonDecode(res.body)['body']['items'][0];
-    print(json);
+
+  Future searchFood() async {
+    foods = await foodprovider.getdata(myController.text);
   }
 
   @override
@@ -66,7 +68,7 @@ class _SearchState extends State<Search> {
                               ),
                             ),
                             ElevatedButton(
-                              onPressed: _callAPI,
+                              onPressed: searchFood,
                               child: const Text("검색"),
                             ),
                           ],

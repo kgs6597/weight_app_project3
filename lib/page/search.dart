@@ -19,6 +19,9 @@ class _SearchState extends State<Search> {
 
   Future searchFood() async {
     foods = await foodprovider.getdata(myController.text);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -74,72 +77,79 @@ class _SearchState extends State<Search> {
                           ],
                         ),
                       ),
-                      Container(
-                        width: 400,
-                        height: 450,
-                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                        child: ListView(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                              width: 380,
-                              height: 50,
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      color: Colors.grey[300],
-                                      width: 230,
-                                      height: 50,
-                                      child: Row(
+                      isLoading
+                          ? Center(child: const CircularProgressIndicator())
+                          : Container(
+                              width: 400,
+                              height: 450,
+                              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                              child: ListView(
+                                children: [
+                                  Container(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                    width: 380,
+                                    height: 50,
+                                    child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
+                                            MainAxisAlignment.center,
                                         children: [
-                                          Text('계란 후라이'),
-                                          Text('50 Kcal')
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      color: Colors.grey[300],
-                                      width: 130,
-                                      height: 50,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          MaterialButton(
-                                            height: 20,
-                                            minWidth: 20,
-                                            color: Colors.lightBlueAccent[400],
-                                            onPressed: () {},
-                                            child: Text(
-                                              '+',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                              ),
+                                          Container(
+                                            color: Colors.grey[300],
+                                            width: 230,
+                                            height: 50,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Text(foods[0].DESC_KOR),
+                                                Text(
+                                                    '${foods[0].NUTR_CONT1}Kcal'),
+                                              ],
                                             ),
                                           ),
-                                          MaterialButton(
-                                            height: 20,
-                                            minWidth: 20,
-                                            color: Colors.lightBlueAccent[400],
-                                            onPressed: () {},
-                                            child: Text(
-                                              '음식정보',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                              ),
+                                          Container(
+                                            color: Colors.grey[300],
+                                            width: 130,
+                                            height: 50,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                MaterialButton(
+                                                  height: 20,
+                                                  minWidth: 20,
+                                                  color: Colors
+                                                      .lightBlueAccent[400],
+                                                  onPressed: () {},
+                                                  child: Text(
+                                                    '+',
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                ),
+                                                MaterialButton(
+                                                  height: 20,
+                                                  minWidth: 20,
+                                                  color: Colors
+                                                      .lightBlueAccent[400],
+                                                  onPressed: () {},
+                                                  child: Text(
+                                                    '음식정보',
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
                                             ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ]),
-                            ),
-                          ],
-                        ),
-                      )
+                                          ),
+                                        ]),
+                                  ),
+                                ],
+                              ),
+                            )
                     ],
                   ),
                 )),

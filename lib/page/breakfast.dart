@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:weight_app_project3/page/search.dart';
 
+import '../apiModel/food_model.dart';
+
 class BreakFast extends StatefulWidget {
   const BreakFast({super.key});
 
@@ -9,6 +11,20 @@ class BreakFast extends StatefulWidget {
 }
 
 class _BreakFastState extends State<BreakFast> {
+  List data = [];
+  bool isLoading = true;
+
+  _foodDataGet(BuildContext context) async {
+    List result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => Search()));
+    setState(() {
+      isLoading = false;
+      data.add(result);
+    });
+
+    print(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,10 +56,7 @@ class _BreakFastState extends State<BreakFast> {
                         minWidth: 300,
                         color: Colors.lightBlueAccent[400],
                         onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (BuildContext context) => Search()),
-                          );
+                          _foodDataGet(context);
                         },
                         child: Text(
                           '음식 검색하기',
@@ -64,146 +77,80 @@ class _BreakFastState extends State<BreakFast> {
                             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                             width: 380,
                             height: 50,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                    color: Colors.grey[300],
-                                    width: 250,
-                                    height: 50,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Text('삶은달걀 X5'),
-                                        Text('250Kacl'),
-                                      ],
-                                    )),
-                                Container(
-                                  color: Colors.grey[300],
-                                  width: 130,
-                                  height: 50,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                            child: isLoading
+                                ? Center(
+                                    child: Text(''),
+                                  )
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      MaterialButton(
-                                        height: 20,
-                                        minWidth: 20,
-                                        color: Colors.lightBlueAccent[400],
-                                        onPressed: () {},
-                                        child: Text(
-                                          '+',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                      MaterialButton(
-                                        height: 20,
-                                        minWidth: 20,
-                                        color: Colors.lightBlueAccent[400],
-                                        onPressed: () {},
-                                        child: Text(
-                                          '-',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                      MaterialButton(
-                                        height: 20,
-                                        minWidth: 20,
-                                        color: Colors.lightBlueAccent[400],
-                                        onPressed: () {},
-                                        child: Text(
-                                          'x',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.white,
-                                          ),
+                                      Container(
+                                          color: Colors.grey[300],
+                                          width: 250,
+                                          height: 50,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Text('test'),
+                                            ],
+                                          )),
+                                      Container(
+                                        color: Colors.grey[300],
+                                        width: 130,
+                                        height: 50,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            MaterialButton(
+                                              height: 20,
+                                              minWidth: 20,
+                                              color:
+                                                  Colors.lightBlueAccent[400],
+                                              onPressed: () {},
+                                              child: Text(
+                                                '+',
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                            MaterialButton(
+                                              height: 20,
+                                              minWidth: 20,
+                                              color:
+                                                  Colors.lightBlueAccent[400],
+                                              onPressed: () {},
+                                              child: Text(
+                                                '-',
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                            MaterialButton(
+                                              height: 20,
+                                              minWidth: 20,
+                                              color:
+                                                  Colors.lightBlueAccent[400],
+                                              onPressed: () {},
+                                              child: Text(
+                                                'x',
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
-                            ),
                           ),
-                          Container(
-                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                            width: 300,
-                            height: 50,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                    color: Colors.grey[300],
-                                    width: 250,
-                                    height: 50,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Text('샐러드 X1'),
-                                        Text('350Kacl'),
-                                      ],
-                                    )),
-                                Container(
-                                  color: Colors.grey[300],
-                                  width: 130,
-                                  height: 50,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      MaterialButton(
-                                        height: 20,
-                                        minWidth: 20,
-                                        color: Colors.lightBlueAccent[400],
-                                        onPressed: () {},
-                                        child: Text(
-                                          '+',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                      MaterialButton(
-                                        height: 20,
-                                        minWidth: 20,
-                                        color: Colors.lightBlueAccent[400],
-                                        onPressed: () {},
-                                        child: Text(
-                                          '-',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                      MaterialButton(
-                                        height: 20,
-                                        minWidth: 20,
-                                        color: Colors.lightBlueAccent[400],
-                                        onPressed: () {},
-                                        child: Text(
-                                          'x',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
                         ],
                       ),
                     ),

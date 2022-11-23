@@ -162,7 +162,7 @@ class _BreakFastState extends State<BreakFast> {
                       color: Colors.grey[350],
                       width: 380,
                       height: 50,
-                      child: Center(child: Text('총량: 600kcal')),
+                      child: Center(child: Text('총량: 300kcal')),
                     )
                   ],
                 ),

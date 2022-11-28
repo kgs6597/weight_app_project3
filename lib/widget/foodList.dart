@@ -18,11 +18,10 @@ class _FoodListState extends State<FoodList> {
   bool isLoading = true;
   FoodProvider foodprovider = FoodProvider();
   final myController = TextEditingController();
-  final data = ['', 0, 0, 0, 0, 0];
+  final data = ['', 0, 0, 0, 0, 0, 1]; //식사에 적용할 list
 
   Future searchFood() async {
     foods = await foodprovider.getdata(myController.text);
-    print('foods $foods');
     setState(() {
       isLoading = false;
     });
@@ -104,8 +103,8 @@ class _FoodListState extends State<FoodList> {
                                       minWidth: 20,
                                       color: Colors.lightBlueAccent[400],
                                       onPressed: () {
-                                        print(index);
                                         setState(() {
+                                          // 버튼 클릭시 상품명, 칼로리, 탄수화물, 단백질, 지방, 당류 리스트에 입력
                                           data[0] = foods[index].DESC_KOR;
                                           data[1] = double.parse(
                                               foods[index].NUTR_CONT1);

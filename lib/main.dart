@@ -60,6 +60,16 @@ class _FirstPageState extends State<FirstPage> {
     }
   }
 
+  List data = [];
+  _foodTotal(BuildContext context) async {
+    List result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => BreakFast()));
+    setState(() {
+      data.add(result);
+      print(data);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<ChartData> chartData = [
@@ -159,11 +169,7 @@ class _FirstPageState extends State<FirstPage> {
                               Text('아침식사: $breakCal'),
                               ElevatedButton(
                                 onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            BreakFast()),
-                                  );
+                                  _foodTotal(context);
                                 },
                                 child: Text('음식추가'),
                               ),
@@ -183,11 +189,7 @@ class _FirstPageState extends State<FirstPage> {
                               Text('점심식사: $lunchCal'),
                               ElevatedButton(
                                 onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            Lunch()),
-                                  );
+                                  _foodTotal(context);
                                 },
                                 child: Text('음식추가'),
                               ),

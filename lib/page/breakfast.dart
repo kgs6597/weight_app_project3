@@ -11,10 +11,16 @@ class BreakFast extends StatefulWidget {
 }
 
 class _BreakFastState extends State<BreakFast> {
+  dynamic totalcal = 0;
+  dynamic totalcarbo = 0;
+  dynamic totalpro = 0;
+  dynamic totalfat = 0;
+  dynamic totalsugar = 0;
   List data2 = [];
   List data = [];
+  List total = [0, 0, 0, 0, 0]; // 칼로리, 탄수화물, 단백질, 지방, 당류 순
   bool isLoading = true;
-  dynamic total = 0;
+
   _foodDataGet(BuildContext context) async {
     List result = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => Search()));
@@ -22,14 +28,78 @@ class _BreakFastState extends State<BreakFast> {
     setState(() {
       isLoading = false;
       data.add(result);
-      total = 0;
+      totalcal = 0;
       for (int i = 0; i < data.length; i++) {
-        total = total + data[i][1];
+        totalcal = totalcal + data[i][1];
+        totalcarbo = totalcarbo + data[i][2];
+        totalpro = totalpro + data[i][3];
+        totalfat = totalfat + data[i][4];
+        totalsugar = totalsugar + data[i][5];
       }
+      total[0] = totalcal;
+      total[1] = totalcarbo;
+      total[2] = totalpro;
+      total[3] = totalfat;
+      total[4] = totalsugar;
     });
 
     print(data);
     print('data2 ${data}');
+  }
+
+  _foodPlus(index) {
+    setState(() {
+      totalcal -= data[index][1] * data[index][6];
+      totalcarbo -= data[index][2] * data[index][6];
+      totalpro -= data[index][3] * data[index][6];
+      totalfat -= data[index][4] * data[index][6];
+      totalsugar -= data[index][5] * data[index][6];
+      data[index][6]++;
+      totalcal += data[index][1] * data[index][6];
+      totalcarbo += data[index][2] * data[index][6];
+      totalpro += data[index][3] * data[index][6];
+      totalfat += data[index][4] * data[index][6];
+      totalsugar += data[index][5] * data[index][6];
+      total[0] = totalcal;
+      total[1] = totalcarbo;
+      total[2] = totalpro;
+      total[3] = totalfat;
+      total[4] = totalsugar;
+    });
+  }
+
+  _foodMinus(index) {
+    setState(() {
+      if (data[index][6] > 1) {
+        totalcal -= data[index][1];
+        totalcarbo -= data[index][2];
+        totalpro -= data[index][3];
+        totalfat -= data[index][4];
+        totalsugar -= data[index][5];
+        data[index][6]--;
+        total[0] = totalcal;
+        total[1] = totalcarbo;
+        total[2] = totalpro;
+        total[3] = totalfat;
+        total[4] = totalsugar;
+      }
+    });
+  }
+
+  _foodDel(index) {
+    setState(() {
+      totalcal -= data[index][1] * data[index][6];
+      totalcarbo -= data[index][2] * data[index][6];
+      totalpro -= data[index][3] * data[index][6];
+      totalfat -= data[index][4] * data[index][6];
+      totalsugar -= data[index][5] * data[index][6];
+      data.removeAt(index);
+      total[0] = totalcal;
+      total[1] = totalcarbo;
+      total[2] = totalpro;
+      total[3] = totalfat;
+      total[4] = totalsugar;
+    });
   }
 
   @override
@@ -41,7 +111,7 @@ class _BreakFastState extends State<BreakFast> {
         leading: BackButton(
             color: Colors.white,
             onPressed: () {
-              Navigator.pop(context, data);
+              Navigator.pop(context, total);
             }),
       ),
       body: Container(
@@ -109,7 +179,8 @@ class _BreakFastState extends State<BreakFast> {
                                               children: [
                                                 Text(
                                                     '${data[index][0]} X ${data[index][6]}'),
-                                                Text('${data[index][1]}Kcal'),
+                                                Text(
+                                                    '${data[index][1] * data[index][6]}Kcal'),
                                               ],
                                             )),
                                         Container(
@@ -126,7 +197,9 @@ class _BreakFastState extends State<BreakFast> {
                                                 minWidth: 20,
                                                 color:
                                                     Colors.lightBlueAccent[400],
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  _foodPlus(index);
+                                                },
                                                 child: Text(
                                                   '+',
                                                   style: TextStyle(
@@ -140,7 +213,9 @@ class _BreakFastState extends State<BreakFast> {
                                                 minWidth: 20,
                                                 color:
                                                     Colors.lightBlueAccent[400],
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  _foodMinus(index);
+                                                },
                                                 child: Text(
                                                   '-',
                                                   style: TextStyle(
@@ -154,7 +229,9 @@ class _BreakFastState extends State<BreakFast> {
                                                 minWidth: 20,
                                                 color:
                                                     Colors.lightBlueAccent[400],
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  _foodDel(index);
+                                                },
                                                 child: Text(
                                                   'x',
                                                   style: TextStyle(
@@ -179,7 +256,7 @@ class _BreakFastState extends State<BreakFast> {
                       color: Colors.grey[350],
                       width: 380,
                       height: 50,
-                      child: Center(child: Text('총량: ${total}kcal')),
+                      child: Center(child: Text('총량: ${totalcal}kcal')),
                     )
                   ],
                 ),

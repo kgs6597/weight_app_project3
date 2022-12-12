@@ -13,6 +13,8 @@ const TextStyle Style_nice = TextStyle(
 class Yam_Screen extends StatelessWidget {
   int index = 0;
 
+  final List data2;
+  Yam_Screen({required this.data2});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,43 +32,43 @@ class Yam_Screen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "text",
+                "${data2[0]}",
                 style: TextStyle(fontSize: 15),
               ), //식품명
               Text(
-                "text",
+                "${data2[1]}",
                 style: TextStyle(fontSize: 15),
               ), //1회제공량
               Text(
-                "text",
+                "${data2[2]}",
                 style: TextStyle(fontSize: 15),
               ), //열량
               Text(
-                "text",
+                "${data2[3]}",
                 style: TextStyle(fontSize: 15),
               ), //
               Text(
-                "text",
+                "${data2[4]}",
                 style: TextStyle(fontSize: 15),
               ),
               Text(
-                "text",
+                "${data2[5]}",
                 style: TextStyle(fontSize: 15),
               ),
               Text(
-                "text",
+                "${data2[6]}",
                 style: TextStyle(fontSize: 15),
               ),
               Text(
-                "text",
+                "${data2[7]}",
                 style: TextStyle(fontSize: 15),
               ),
               Text(
-                "text",
+                "${data2[8]}",
                 style: TextStyle(fontSize: 15),
               ),
               Text(
-                "text",
+                "${data2[9]}",
                 style: TextStyle(fontSize: 15),
               ),
               Text(

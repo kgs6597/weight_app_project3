@@ -60,11 +60,14 @@ class _FirstPageState extends State<FirstPage> {
     }
   }
 
-  List data = [];
+  List data = [
+    [0, 0, 0, 0, 0]
+  ];
   _foodTotal(BuildContext context) async {
     List result = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => BreakFast()));
     setState(() {
+      data.removeAt(0);
       data.add(result);
       print(data);
     });
@@ -73,10 +76,10 @@ class _FirstPageState extends State<FirstPage> {
   @override
   Widget build(BuildContext context) {
     final List<ChartData> chartData = [
-      ChartData('탄수화물', 1100),
-      ChartData('단백질', 120),
-      ChartData('지방', 80),
-      ChartData('당류', 50),
+      ChartData('탄수화물', data[0][1].round()),
+      ChartData('단백질', data[0][2].round()),
+      ChartData('지방', data[0][3].round()),
+      ChartData('당류', data[0][4].round()),
     ];
     const double breakCal = 600;
     const double lunchCal = 750;
@@ -166,7 +169,7 @@ class _FirstPageState extends State<FirstPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text('아침식사: $breakCal'),
+                              Text('아침식사: ${data[0][0]}'),
                               ElevatedButton(
                                 onPressed: () {
                                   _foodTotal(context);

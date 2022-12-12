@@ -1,6 +1,7 @@
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:weight_app_project3/page/showFood.dart';
 
 import '../apiModel/food_model.dart';
 import '../apiModel/food_providers.dart';
@@ -18,7 +19,8 @@ class _FoodListState extends State<FoodList> {
   bool isLoading = true;
   FoodProvider foodprovider = FoodProvider();
   final myController = TextEditingController();
-  final data = ['', 0, 0, 0, 0, 0, 1]; //식사에 적용할 list
+  List data = ['', 0, 0, 0, 0, 0, 1]; //식사에 적용할 list
+  List data2 = ['', '', '', '', '', '', '', '', '', ''];
 
   Future searchFood() async {
     foods = await foodprovider.getdata(myController.text);
@@ -137,7 +139,25 @@ class _FoodListState extends State<FoodList> {
                                       minWidth: 20,
                                       color: Colors.lightBlueAccent[400],
                                       onPressed: () {
-                                        print(index);
+                                        setState(() {
+                                          data2[0] = foods[index].DESC_KOR;
+                                          data2[1] = foods[index].SERVING_WT;
+                                          data2[2] = foods[index].NUTR_CONT1;
+                                          data2[3] = foods[index].NUTR_CONT2;
+                                          data2[4] = foods[index].NUTR_CONT3;
+                                          data2[5] = foods[index].NUTR_CONT4;
+                                          data2[6] = foods[index].NUTR_CONT5;
+                                          data2[7] = foods[index].NUTR_CONT6;
+                                          data2[8] = foods[index].NUTR_CONT7;
+                                          data2[9] = foods[index].NUTR_CONT8;
+                                        });
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Yam_Screen(
+                                                      data2: data2,
+                                                    )));
                                       },
                                       child: Text(
                                         '음식정보',
